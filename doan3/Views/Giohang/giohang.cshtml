@@ -1,0 +1,86 @@
+﻿@using doan3.Models.Entities;
+@{
+    ViewBag.Title = "giohang";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model IEnumerable<CTDHang>
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>Giỏ hàng</h2>
+                    <div class="breadcrumb__option">
+                        <a href="./index.html">Trang chủ</a>
+                        <span>Giỏ hàng</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+<!-- Shoping Cart Section Begin -->
+<section class="shoping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shoping__cart__table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="shoping__product">Sản phẩm</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Thành tiền</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="shoping__cart__item">
+                                        <img src="~/Content/images/@item.HinhAnh" alt="" style="width:100px">
+                                        <h5>@item.TenSP</h5>
+                                    </td>
+                                    <td class="shoping__cart__price">
+                                        @(string.Format("{0:#,##0}", @item.DonGia))
+                                    </td>
+                                    <td class="shoping__cart__quantity">
+                                        <div class="quantity">
+                                            @item.SoLuong
+                                        </div>
+                                    </td>
+                                    <td class="shoping__cart__total">
+                                        @(string.Format("{0:#,##0}",item.SoLuong * item.DonGia))
+                                    </td>
+                                    <td class="shoping__cart__item__close">
+                                        <span class="icon_close" onclick="XoaGioHang('@item.MaSP')"></span>
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shoping__cart__btns">
+                    <a href=@Url.Action("trangchu", "Trangchu") class="primary-btn cart-btn">Tiếp tục mua hàng</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="shoping__checkout">
+                    <ul>
+                        <li>Tổng tiền <span>@(string.Format("{0:#,##0}", ViewBag.tongtien))</span></li>
+                    </ul>
+                    <a href=@Url.Action("checkout", "Checkout") class="primary-btn">Tiến hành thanh toán</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shoping Cart Section End -->

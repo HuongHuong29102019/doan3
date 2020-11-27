@@ -22,6 +22,11 @@
     <link href="~/Content/css/slicknav.min.css" rel="stylesheet" />
     <link href="~/Content/css/style.css" rel="stylesheet" />
 </head>
+@using doan3.Models.DataAccess;
+@using doan3.Models.Entities;
+@{
+    loaiModel db = new loaiModel();
+}
 
 <body>
     <!-- Page Preloder -->
@@ -42,90 +47,49 @@
             </ul>
             <div class="header__cart__price">item: <span>$150.00</span></div>
         </div>
-        <div class="humberger__menu__widget">
-            <div class="header__top__right__language">
-                <img src="img/language.png" alt="">
-                <div>English</div>
-                <span class="arrow_carrot-down"></span>
-                <ul>
-                    <li><a href="#">Spanis</a></li>
-                    <li><a href="#">English</a></li>
-                </ul>
-            </div>
-            <div class="header__top__right__auth">
-                <a href="#"><i class="fa fa-user"></i> Login</a>
-            </div>
-        </div>
-        <nav class="humberger__menu__nav mobile-menu">
-            <ul>
-                <li class="active"><a href="./index.html">Home</a></li>
-                <li><a href="./shop-grid.html">Shop</a></li>
-                <li>
-                    <a href="#">Pages</a>
-                    <ul class="header__menu__dropdown">
-                        <li><a href="./shop-details.html">Shop Details</a></li>
-                        <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-                        <li><a href="./checkout.html">Check Out</a></li>
-                        <li><a href="./blog-details.html">Blog Details</a></li>
-                    </ul>
-                </li>
-                <li><a href="./blog.html">Blog</a></li>
-                <li><a href="./contact.html">Contact</a></li>
-            </ul>
-        </nav>
-        <div id="mobile-menu-wrap"></div>
-        <div class="header__top__right__social">
-            <a href="#"><i class="fa fa-facebook"></i></a>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-            <a href="#"><i class="fa fa-linkedin"></i></a>
-            <a href="#"><i class="fa fa-pinterest-p"></i></a>
-        </div>
-        <div class="humberger__menu__contact">
-            <ul>
-                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
-                <li>Free Shipping for all Order of $99</li>
-            </ul>
-        </div>
-    </div>
-    <!-- Humberger End -->
-    <!-- Header Section Begin -->
-    <header class="header">
-        <div class="header__top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 col-md-6">
-                        <div class="header__top__left">
-                            <ul>
-                                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
-                                <li>Free Shipping for all Order of $99</li>
-                            </ul>
-                        </div>
+        <!-- Cart Button -->
+        <div class="modal fade" id="ModelGioHang" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document" style="margin-left: -400px;width:820px;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle" style="font-size: 25px;font-family: sans-serif;color: #128066;">Giỏ hàng của bạn</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="border-radius: 50%;width: 35px;background: red;margin-top: -30px;height: 35px;color: #08807a;">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <div class="col-lg-6 col-md-6">
-                        <div class="header__top__right">
-                            <div class="header__top__right__social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
-                                <a href="#"><i class="fa fa-pinterest-p"></i></a>
-                            </div>
-                            <div class="header__top__right__language">
-                                <img src="img/language.png" alt="">
-                                <div>English</div>
-                                <span class="arrow_carrot-down"></span>
-                                <ul>
-                                    <li><a href="#">Spanis</a></li>
-                                    <li><a href="#">English</a></li>
-                                </ul>
-                            </div>
-                            <div class="header__top__right__auth">
-                                <a href="#"><i class="fa fa-user"></i> Login</a>
-                            </div>
-                        </div>
+                    <div class="modal-body">
+
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    @*<th scope="col">Mã sản phẩm </th>*@
+                                    <th scope="col">Tên sản phẩm </th>
+                                    <th scope="col">Hình ảnh </th>
+                                    <th scope="col">Số lượng</th>
+                                    <th scope="col">Đơn giá</th>
+                                    <th scope="col"> Thành tiền</th>
+                                    <th scope="col"> Chức năng</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bang_GioHang">
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div><p style="margin-left: 15px;font-family: sans-serif;font-size: 20px;color: #025f0a;float:left">Tổng tiền:</p>  <span style="font-size: 19px;padding: 0px 10px;color: #fb8409;" id="Thanhtien123"></span></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" style="background: #f77067;border-radius: 20px;color: #fff;font-family: sans-serif;">Close</button>
+                        <button type="button" class="btn btn-primary" style="border-radius: 20px;font-family: sans-serif;border: none;background: #0c9a8d;"><a href=@Url.Action("Giohang", "giohang") style="color:#fff;">View</a></button>
                     </div>
                 </div>
             </div>
         </div>
+       
+        <div id="mobile-menu-wrap"></div>
+    </div>
+    <!-- Humberger End -->
+    <!-- Header Section Begin -->
+    <header class="header">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3">
@@ -136,19 +100,18 @@
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
-                            <li class="active"><a href="./index.html">Home</a></li>
-                            <li><a href="./shop-grid.html">Shop</a></li>
+                            <li class="active"><a href="./index.html">Trang chủ</a></li>
                             <li>
-                                <a href="#">Pages</a>
+                                <a href="#">Sản phẩm</a>
                                 <ul class="header__menu__dropdown">
-                                    <li><a href="./shop-details.html">Shop Details</a></li>
-                                    <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-                                    <li><a href="./checkout.html">Check Out</a></li>
-                                    <li><a href="./blog-details.html">Blog Details</a></li>
+                                    @foreach (var item in db.getLoai())
+                                    {
+                                        <li> <a href=@Url.Action("danhsachsanpham", "Danhsachsanpham", new { @maloai = item.maloai, tenloai = item.tenloai }) style="width:250px;"> @item.tenloai </a> </li>
+                                    }
                                 </ul>
                             </li>
-                            <li><a href="./blog.html">Blog</a></li>
-                            <li><a href="./contact.html">Contact</a></li>
+                            <li><a href="./blog.html">Giới thiệu</a></li>
+                            <li><a href="./contact.html">Liên hệ</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -167,6 +130,58 @@
             </div>
         </div>
     </header>
+    <!-- Hero Section Begin -->
+    <section class="hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="hero__categories">
+                        <div class="hero__categories__all">
+                            <i class="fa fa-bars"></i>
+                            <span>Loại cây</span>
+                        </div>
+                        <ul>
+                            @foreach (var item in db.getLoai())
+                            {
+                                <li> <a href=@Url.Action("danhsachsanpham", "Danhsachsanpham", new { @maloai = item.maloai, tenloai = item.tenloai }) style="width:250px;"> @item.tenloai </a> </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="hero__search">
+                        <div class="hero__search__form">
+                            @*<form action="#">*@
+                            @using (Html.BeginForm("search", "Search", new { page = 1 }))
+                            {
+                                <input name="tenSPTim" type="text" value="@ViewBag.KeyWord" placeholder="Tìm kiếm" aria-label="Search" id="search">
+                                <button type="submit" id="btnsearch" class="site-btn"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            }
+                            @*</form>*@
+                        </div>
+                        <div class="hero__search__phone">
+                            <div class="hero__search__phone__icon">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            <div class="hero__search__phone__text">
+                                <h5>+65 11.188.888</h5>
+                                <span>support 24/7 time</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero__item set-bg" data-setbg="img/hero/banner.jpg">
+                        <div class="hero__text">
+                            <span>FRUIT FRESH</span>
+                            <h2>Vegetable <br />100% Organic</h2>
+                            <p>Free Pickup and Delivery Available</p>
+                            <a href="#" class="primary-btn">SHOP NOW</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Hero Section End -->
     <!-- Header Section End -->
     @RenderBody();
     <footer class="footer spad">
@@ -249,7 +264,122 @@
     <script src="~/Content/js/mixitup.min.js"></script>
     <script src="~/Content/js/owl.carousel.min.js"></script>
     <script src="~/Content/js/main.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#butGioHang").click(function () {
+                $("#ModelGioHang").modal();
+            });
+        });
+    </script>
+    <script>
+        function SoLuongChange(id, dg) {
+            console.log(id);
+            console.log(dg);
+            var sl = parseInt($("#giohang_SoLuong_" + id).val());
+            console.log(sl);
+            var thanhtien = sl * dg;
+            console.log(thanhtien);
+            $.ajax({
+                url: '@Url.Action("SuaCTDH", "GioHang")',
+                type: 'Get',
+                datatype: 'JSon',
+                data: { masp: id, sl: sl },
+                success: function (data) {
+                    $('#giohang_thanhtien_' + id).html(formatMoney(thanhtien.toString()));
+                    $("#Thanhtien123").html(formatMoney(data.tong));
+                    $("#sl").html(data.sl);
+                },
+                error:function(data)
+                {
+                    alert("Loi roi");
+                }
+            });
+        }
+    </script>
+    <script>
 
+        function formatMoney(amount) {
+            decimalCount = 0;
+            decimal = ".";
+            thousands = ",";
+            try {
+                decimalCount = Math.abs(decimalCount);
+                decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
+
+                const negativeSign = amount < 0 ? "-" : "";
+
+                let i = parseInt(amount = Math.abs(Number(amount) || 0).toFixed(decimalCount)).toString();
+                let j = (i.length > 3) ? i.length % 3 : 0;
+
+                return negativeSign + (j ? i.substr(0, j) + thousands : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) + (decimalCount ? decimal + Math.abs(amount - i).toFixed(decimalCount).slice(2) : "");
+            } catch (e) {
+                console.log(e)
+            }
+        };
+        function ThemGioHang(MaSP,Gia,TenSP,Hinh)
+        {
+            console.log(MaSP);
+            $.ajax(
+          {
+              url: '@Url.Action("AddCart", "GioHang")',
+              type: 'Post',
+              datatype: 'Json',
+              data: { masp: MaSP, dongia: Gia, tensp: TenSP, hinhanh: Hinh },
+              success: function (data) {
+                  console.log(data);
+                  $("#Thanhtien123").html(formatMoney(data.tong));
+                  $("#sl").html(data.ssp);
+              },
+              error: function (data) {
+                  alert('Không thêm được vào giỏ hàng');
+              }
+
+          });
+
+        }
+        $("#butGioHang").click(function () {
+            var html = '';
+            $.ajax(
+                {
+                    url: '@Url.Action("GetCard", "GioHang")',
+                    type: 'Get',
+                    datatype: 'Json',
+                    success: function (data) {
+                        $.each(data.LCTDH, function (key, item) {
+                            html += '<tr id="row_model_' + item.MaSP + '">';
+                            //html += '<td>' + item.MaSP + '</td>';
+                            html += '<td>' + item.TenSP + '</td>';
+                            html += '<td><img src="/Content/image/' + item.HinhAnh + '" width="45px" height="45px" /></td>';
+                            console.log("~/Content/image/" + item.HinhAnh);
+                            html += '<td>';
+                            html += '<input onchange="SoLuongChange(\'' + item.MaSP + '\',' + item.DonGia + ')" id="giohang_SoLuong_' + item.MaSP + '" type="text" value="' + item.SoLuong + '"min="1" max="5">';
+                            html += '</td>';
+                            html += '<td id="giohang_Donggia_' + item.MaSP + '">' + item.strDonGia + '</td>';
+                            html += '<td id="giohang_thanhtien_' + item.MaSP + '">' + formatMoney(item.SoLuong * item.DonGia) + '</td>';
+                            html += '<td><a class="glyphicon glyphicon-trash" onclick="XoaGioHang(\'' + item.MaSP + '\')" style="font-size: 15px;color: #0db577;"></a></td>';
+                            html += '</tr>';
+                        });
+                        $('#bang_GioHang').html(html);
+                        $("#sl").html(data.soluong);
+                    }
+                })
+        })
+        function XoaGioHang(id)
+        {
+            $.ajax({
+                url: '@Url.Action("XoaCTDH", "GioHang")',
+                type: 'Get',
+                datatype: 'Json',
+                data: { masp: id },
+                success:function(data)
+                {
+                    $("#row_model_" + id).remove();
+                    $("#Thanhtien123").html(formatMoney(data.tong1));
+                    $("#sl").html(data.sldem);
+                }
+            })
+        }
+    </script>
 
 
 </body>

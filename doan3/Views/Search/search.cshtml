@@ -1,0 +1,100 @@
+﻿@using doan3.Models.DataAccess;
+@using doan3.Models.Entities;
+@using PagedList;
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    loaiModel db = new loaiModel();
+}
+
+@model  IPagedList<caycanh>
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg" data-setbg="../../Content/img/breadcrumb.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2> Tìm kiếm</h2>>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+<!-- Product Section Begin -->
+<section class="product spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-5">
+                <div class="sidebar">
+                    <div class="sidebar__item">
+                        <h4>Loại cây</h4>
+                        <ul>
+                            @foreach (var item in db.getLoai())
+                            {
+                                <li> <a href=@Url.Action("danhsachsanpham", "Danhsachsanpham", new { @maloai = item.maloai, tenloai = item.tenloai })> @item.tenloai </a> </li>
+                            }
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-7">
+                <div class="product__discount">
+                    <div class="section-title product__discount__title">
+                        <h2>Sản phẩm</h2>
+                    </div>
+                    <div class="row">
+
+
+                        <div class="product__discount__slider owl-carousel">
+                            @if (Model != null)
+                            {
+                                var sosanpham = Model.Count<caycanh>();
+                                for (int i = 0; i < sosanpham; i = i + 2)
+                                {
+                                    <div class="col-lg-4">
+                                        @for (int j = 0; j < 2; j++)
+                                        {
+                                            if (i + j >= sosanpham)
+                                            {
+                                                break;
+                                            }
+                                            var l = Model.ElementAtOrDefault<caycanh>(i + j);//Lấy sp tương ứng vs vị trí hàng i cột j
+                                            <div class="product__discount__item">
+                                                <div class="product__discount__item__pic set-bg"
+                                                     data-setbg="~/Content/images/@l.hinhanh">
+                                                    <img src="~/Content/images/@l.hinhanh" />
+                                                    <ul class="product__item__pic__hover">
+                                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                                        <li><a onclick="ThemGioHang('@l.macaycanh','@l.gia','@l.tencaycanh.Trim()','@l.hinhanh')"><i class="fa fa-shopping-cart"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="product__discount__item__text">
+                                                    @*<span>Dried Fruit</span>*@
+                                                    <h5><a href=@Url.Action("chitietsanpham", "Chitietsanpham", new { masp = l.macaycanh })>@l.tencaycanh</a></h5>
+                                                    <div class="product__item__price">@(string.Format("{0:#,##0}", l.gia)) đ</div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                            }
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="product__pagination">
+                    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount
+                    @Html.PagedListPager(Model, page => Url.Action("danhsachsanpham", new { ViewBag.maloai, ViewBag.tenloai, page }))
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Product Section End -->
